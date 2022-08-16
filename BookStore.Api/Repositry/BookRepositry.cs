@@ -1,4 +1,5 @@
-﻿using BookStore.Api.Data;
+﻿using AutoMapper;
+using BookStore.Api.Data;
 using BookStore.Api.Models;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.EntityFrameworkCore;
@@ -8,37 +9,37 @@ namespace BookStore.Api.Repositry
     public class BookRepositry : IBookRepositry
     {
         private readonly BookStoreContext _context;
+        private readonly IMapper _mapper;
 
-        public BookRepositry(BookStoreContext context)
+        public BookRepositry(BookStoreContext context, IMapper mapper) //Imapper for mapping
         {
             _context = context;
+            _mapper = mapper;
         }
 
         //Method to get all books from table (Database)
         public async Task<List<BookModel>> GetAllBooksAsync()
         {
-            var records = await _context.Books.Select(x => new BookModel()
-            {
-                Id = x.Id,
-                Title = x.Title,
-                Description = x.Description,
-            }).ToListAsync();
-
-            return records;
+            var records = await _context.Books.ToListAsync();
+            return _mapper.Map<List<BookModel>>(records);
         }
 
 
         //Method to get a book from table (Database) using ID
         public async Task<BookModel> GetBookByIdAsync(int bookdId)
         {
-            var records = await _context.Books.Where(x => x.Id == bookdId).Select(x => new BookModel()
-            {
-                Id = x.Id,
-                Title = x.Title,
-                Description = x.Description,
-            }).FirstOrDefaultAsync();
+            //var records = await _context.Books.Where(x => x.Id == bookdId).Select(x => new BookModel()
+            //{
+            //    Id = x.Id,
+            //    Title = x.Title,
+            //    Description = x.Description,
+            //}).FirstOrDefaultAsync();
 
-            return records;
+            //return records;
+
+            //method using mapper
+            var book = await _context.Books.FindAsync(bookdId);
+            return _mapper.Map<BookModel>(book);
         }
 
 

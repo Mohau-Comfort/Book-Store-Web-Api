@@ -18,6 +18,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 //Dependency Injection Service
 builder.Services.AddTransient<IBookRepositry, BookRepositry>();
+//Auto Mapper Service
+builder.Services.AddAutoMapper(typeof(Program));
 
 
 
