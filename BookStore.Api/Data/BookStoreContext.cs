@@ -1,8 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BookStore.Api.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookStore.Api.Data
 {
-    public class BookStoreContext : DbContext 
+    public class BookStoreContext : IdentityDbContext<ApplicationUser> 
     {
 
         //setting up the constructor
