@@ -27,7 +27,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IBookRepositry, BookRepositry>();
 builder.Services.AddTransient<IAccountRepository, AccountRepository>();
 //Auto Mapper Service
-builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddAutoMapper(typeof(Program)); 
 // Service to fix CORS error
 builder.Services.AddCors(option =>
 {
